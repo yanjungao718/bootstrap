@@ -17,6 +17,7 @@ The `$utilities` map contains all our utilities and is later merged with your cu
 | `property` | **Required** | Name of the property, this can be a string or an array of strings (e.g., horizontal paddings or margins). |
 | `values` | **Required** | List of values, or a map if you don't want the class name to be the same as the value. If `null` is used as map key, it isn't compiled. |
 | `class` | Optional | Variable for the class name if you don't want it to be the same as the property. In case you don't provide the `class` key and `property` key is an array of strings, the class name will be the first element of the `property` array. |
+| `css-var` | Optional | Boolean option for generating CSS variables only (`true`) instead of `property: value` pairs (default). |
 | `state` | Optional | List of pseudo-class variants like `:hover` or `:focus` to generate for the utility. No default value. |
 | `responsive` | Optional | Boolean indicating if responsive classes need to be generated. `false` by default. |
 | `rfs` | Optional | Boolean to enable fluid rescaling. Have a look at the [RFS]({{< docsref "/getting-started/rfs" >}}) page to find out how this works. `false` by default. |
@@ -81,6 +82,34 @@ Output:
 .o-50 { opacity: .5; }
 .o-75 { opacity: .75; }
 .o-100 { opacity: 1; }
+```
+
+### CSS variable utilities
+
+Set the `css-var` boolean option to `true` and the API will generate local CSS variables for the given selector instead of the usual `property: value` rules. Consider our `.text-opacity-*` utilities:
+
+```scss
+$utilities: (
+  "text-opacity": (
+    css-var: true,
+    class: text-opacity,
+    values: (
+      25: .25,
+      50: .5,
+      75: .75,
+      100: 1
+    )
+  ),
+ );
+```
+
+Output:
+
+```css
+.text-opacity-25 { --bs-text-opacity: .25; }
+.text-opacity-50 { --bs-text-opacity: .5; }
+.text-opacity-75 { --bs-text-opacity: .75; }
+.text-opacity-100 { --bs-text-opacity: 1; }
 ```
 
 ### States
